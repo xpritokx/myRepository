@@ -1,0 +1,31 @@
+def make_sudoku_size(size):
+	it = 0
+	mas = [i + 1 for i in range(size ** 2)]
+	mars = [0 for i in range(size ** 2)]
+	random.shuffle(mas)
+	mars[0] = mas
+	for i in range(1,(size*size)):
+		if (i) >= size and (i) % size == 0:
+			for j in range(size):
+				it += 1
+				if mars[i] != 0:
+					lol = mars[i][:size * j]
+				else:
+					lol = []
+				if ((size ** 2) - (size + (size * j))) != 0:
+					mars[i] = ((mars[i-size])[1 + (j * size):])[:-((size ** 2) - (size + (size * j)))]
+				else:
+					mars[i] = ((mars[i-size])[1 + (j * size):])
+				mars[i] +=  mars[i-size][(j * size):-(size**2 - (1 + (j * size)))]
+				mars[i] += (mars[i-size])[size + ((j * size)):]
+				mars[i] = lol + mars[i]
+		else:
+			mars[i] = mars[i-1][(size**2) - size:] + mars[i-1][:-size]
+		it += 1
+
+
+	for i in range(size * size):
+		print(mars[i])
+		if (i + 1) % size == 0:
+			print()
+	print(it)
